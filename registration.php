@@ -5,18 +5,33 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Sanitize user input
-    $fname = htmlspecialchars($_POST['fname']); 
-    $mname = htmlspecialchars($_POST['mname']); 
-    $lname = htmlspecialchars($_POST['lname']); 
-    $email = htmlspecialchars($_POST['email']); 
-    $password = htmlspecialchars($_POST['password']);
+    $fname = trim($_POST['fname']); 
+    $mname = trim($_POST['mname']); 
+    $lname = trim($_POST['lname']); 
+    $email = filter_var($_POST['email']); 
+    $password = $_POST['password'];
     $birthday = $_POST['birthday'];
-    //login table
-    $username = htmlspecialchars($_POST['username']);
-    $facultyID = mysqli_real_escape_string($conn, $_POST['facultyID']);
+    $username = trim($_POST['username']);
 
-    // Generate a random ID for facultyID
-    
+    // Generate a random facultyID (e.g., random 8-character alphanumeric string)
+    $facultyID = bin2hex(random_bytes(4));  // Generates an 8-character random string
+
+     //verify email format
+     if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+        echo "<script>
+                alert('Invalid email address!');
+                window.location.href = 'register.php';
+              </script>";
+        exit();
+    }
+    //verify length of password
+    if(strlen($password) < 8){
+        echo "<script>
+                alert('Password must be at least 8 characters long!');
+                window.location.href = 'register.php';
+              </script>";
+        exit();
+    }
 
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -25,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birthDate = new DateTime($birthday);
     $today = new DateTime();
     $age = $today->diff($birthDate)->y;
+
 
     // Check if the email already exists in the register table
     $checkUser = "SELECT * FROM register WHERE email = ?";

@@ -1,0 +1,28 @@
+body{
+    position: relative;
+}
+
+.modal-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 55px;
+    background-color: rgb(212, 212, 212);
+}
+.modal-container{
+    position: relative;
+    width: 35vw;
+}
+.close-modal{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.outer-container{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

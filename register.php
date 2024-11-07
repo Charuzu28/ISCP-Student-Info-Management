@@ -1,5 +1,6 @@
-<?php 
-$facultyID = bin2hex(random_bytes(6));
+<?php
+
+$facultyID = bin2hex(random_bytes(3)); 
 ?>
 
 <!DOCTYPE html>
@@ -87,6 +88,7 @@ $facultyID = bin2hex(random_bytes(6));
             <div class="col-md-4">
                 <label for="facultyID" class="form-label">Faculty ID:</label>
                 <input type="text" class="form-control" id="facultyID" name="FacultyID" value="<?php echo $facultyID ?>" disabled required>
+                <input type="hidden" class="form-control" id="facultyID" name="FacultyID" value="<?php echo $facultyID ?>" required>
             </div>
             <div class="col-md-4">
                 <label for="email" class="form-label">E-mail:</label>
